@@ -6,71 +6,37 @@ TWO SUM
 =================================================
 
 Problem Statement:
-You are given a list of integers and a target
-integer. Find the INDICES of TWO numbers in
-the list that add up to exactly the target.
+Ydef two_sum_brute(nums, target):
+    # Try every pair (i, j)
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return (i, j)
 
-Each input has exactly ONE valid answer, and
-you cannot use the same element twice.
 
-The point of this problem is to FIRST write
-the simple O(n^2) brute-force solution, and
-THEN optimize it to an O(n) solution using a
-DICTIONARY (hash map).
+def two_sum_fast(nums, target):
+    index_map = {}  # value -> index
 
--------------------------------------------------
-Instructions:
-Write TWO functions:
+    for i in range(len(nums)):
+        x = nums[i]
+        complement = target - x
 
-1. two_sum_brute(nums, target)
-   - Use two nested for loops to try every
-     pair (i, j) with i < j.
-   - Return the tuple (i, j) when
-     nums[i] + nums[j] == target.
-   - Time complexity:  O(n^2)
-   - Space complexity: O(1)
+        if complement in index_map:
+            return (index_map[complement], i)
 
-2. two_sum_fast(nums, target)
-   - Use a SINGLE for loop and a DICTIONARY
-     that maps   value -> index.
-   - For each element x at index i, compute
-     the complement = target - x and check
-     whether it already exists in the
-     dictionary.
-   - If yes, return (dict[complement], i).
-   - Otherwise, store dict[x] = i and move on.
-   - Time complexity:  O(n)
-   - Space complexity: O(n)
+        index_map[x] = i
 
-Do NOT use:
-   - sorted() / list.sort()
-   - itertools
-   - any external library
 
-Call BOTH functions on the same input and
-print:
-   - the result of the brute-force version
-   - the result of the optimized version
-   - the time complexity of each version
-
--------------------------------------------------
-Input Example 1:
-nums   = [2, 7, 11, 15]
+# Example input
+nums = [2, 7, 11, 15]
 target = 9
 
-Output Example 1:
-Brute Force: (0, 1)   # O(n^2)
-Optimized:   (0, 1)   # O(n)
+# Call both functions
+print("Brute Force:", two_sum_brute(nums, target))
+print("Optimized:", two_sum_fast(nums, target))
 
--------------------------------------------------
-Input Example 2:
-nums   = [3, 2, 4]
-target = 6
-
-Output Example 2:
-Brute Force: (1, 2)   # O(n^2)
-Optimized:   (1, 2)   # O(n)
-
+print("Brute Force Time Complexity: O(n^2)")
+print("Optimized Time Complexity: O(n)")
 -------------------------------------------------
 Explanation:
 For [2, 7, 11, 15] and target = 9:
@@ -87,3 +53,31 @@ O(1) time, giving an overall O(n) algorithm.
 =================================================
 
 """
+def two_sum_brute(nums, target):
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return (i, j)
+
+
+def two_sum_fast(nums, target):
+    index_map = {}  
+
+    for i in range(len(nums)):
+        x = nums[i]
+        complement = target - x
+
+        if complement in index_map:
+            return (index_map[complement], i)
+
+        index_map[x] = i
+
+
+nums = [2, 7, 11, 15]
+target = 9
+
+print("Brute Force:", two_sum_brute(nums, target))
+print("Optimized:", two_sum_fast(nums, target))
+
+print("Brute Force Time Complexity: O(n^2)")
+print("Optimized Time Complexity: O(n)")
